@@ -1,0 +1,27 @@
+{
+  "name": "ts-phantom",
+  "version": "1.0.0",
+  "description": "Network engine with packets",
+  "main": "./dist/index.js",
+  "dependencies": {
+    "ts-bitstream": "^1.2.1",
+    "typescript": "^4.5.5",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "net",
+    "netty",
+    "networkengine",
+    "engine",
+    "socket",
+    "websocket",
+    "bitstream",
+    "datagram"
+  ],
+  "author": "HellsCoder",
+  "license": "ISC"
+}

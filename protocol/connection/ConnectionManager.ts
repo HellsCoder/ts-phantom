@@ -26,12 +26,33 @@ export class ConnectionManager {
     }
 
     /**
+     * Проверяет, занят ли ConnectionID
+     * @returns bool
+     */
+    public checkIdBusy(id : ConnectionID) : boolean {
+        for(let i = 0; i < this.connections.length; i++){
+            if(this.connections[i].id === id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Добавляет соединение на сервер, генерирует ему ид
      * @param socket WebSocket сокет
      * @returns string ид соединения для дальнейших обращений
      */
     public addConnection(socket : WebSocket) : ConnectionID { 
         let id = this.genID();
+        if(this.checkIdBusy(id)){
+            /**
+             * ID занят, закрываем соединение, отправляем код закрытия с коллизией
+             */
+            socket.send(0x700, {binary:true});
+            socket.close();
+            return;
+        }
         this.connections.push({socket: socket, id : id});
         return id;
     }
@@ -79,7 +100,7 @@ export class ConnectionManager {
     private genID() : string {
         let length = 6;
         let result = '';
-        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let charactersLength = characters.length;
         for (let i = 0; i < length; i++) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));

@@ -108,9 +108,16 @@ export class ClientFactory implements Pipe {
         this.wsClient.on('message', (data) => {
             if(!this.connection){
                 /**
-                 * Первое сообщение от сервера - всегда connection ID
+                 * Первое сообщение от сервера - всегда connection ID, либо коллизия
                  */
                 this.connection = data.toString();
+                if(parseInt(this.connection) === 0x700){
+                    /**
+                     * 0x700 - код коллизии
+                     */
+                    console.info(`failed to connect, please use another node or try again later`);
+                    return;
+                }
                 /**
                  * Передаем ID соединения вверх по цепочке до вызова функции connect()
                  */

@@ -1,3 +1,4 @@
+![Иллюстрация к проекту](https://raw.githubusercontent.com/HellsCoder/ts-phantom/main/ts-phantom.png)
 # ts-phantom
 Сетевой движок с реализацией пакетов и обязательного шифрования, пакеты передаются моментально
 
